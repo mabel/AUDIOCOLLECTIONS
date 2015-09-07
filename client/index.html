@@ -45,17 +45,29 @@
             <div class="panel-heading"><h4>Аудиоколлекции</h4></div>
             <div class="panel-body">
 		<nav>
-			<div class="col-sm-1">
-				<i class="mdi-av-skip-next"></i>
+			<div class="row hidden">
+				<div class="col-sm-1">
+					&nbsp;
+				</div>
+				<div class="col-sm-1">
+					<i class="mdi-av-skip-next"></i>
+				</div>
+				<div class="col-sm-1">
+					<i class="mdi-av-stop"></i>
+				</div>
+				<div class="col-sm-1">
+					<i class="mdi-av-volume-up"></i>
+				</div>
+				<div class="col-sm-7">
+					<div id="volume"></div>
+				</div>
+				<br style="clear: both">
 			</div>
-			<div class="col-sm-1">
-				<i class="mdi-av-stop"></i>
+			<div class="btn-group btn-group-justified hidden">
+			    <i class="btn btn-default mdi-av-skip-next"></i>
+			    <i class="btn btn-default mdi-av-stop"></i>
+			    <i class="btn btn-default mdi-av-volume-up"></i>
 			</div>
-			<div class="col-sm-1">
-				<i class="mdi-av-volume-up"></i>
-			</div>
-			<div class="col-sm-8" id="volume"></div>
-			<br style="clear: both">
 		</nav>
 		<hr>
                 <ul class="list-group"></ul>
@@ -66,11 +78,6 @@
         <script src="js/vendor/ripples.min.js"></script>
         <script src="js/vendor/material.min.js"></script>
         <script src="js/vendor/nouislider.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $.material.init();
-            });
-        </script>
         <script src="js/main.js"></script>
     </body>
 </html>

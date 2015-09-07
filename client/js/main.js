@@ -1,4 +1,6 @@
 $(function(){
+	$.material.init();
+	var isNarrow = $(window).width()
 	$.get('/cgi-bin/iso-images.sh', function(dat){
 		var arr = dat.split(/[\r\n]+/)
 		var $ul = $('.list-group')
@@ -15,11 +17,22 @@ $(function(){
 			el = el.substring(el.search(/[^\/]+\/[^\/]+$/)).replace(/\.iso$/, '')
 			el = el.replace('_', ' ')
 			var txts = el.split('/')
-			$('<strong>').text(txts[0]).appendTo($a)
-			$('<span>&nbsp;/&nbsp;</span>').appendTo($a)
+			if(!isNarrow){
+				$('<strong>').text(txts[0]).appendTo($a)
+				$('<span>&nbsp;/&nbsp;</span>').appendTo($a)
+			}
 			$('<span>').text(txts[1]).appendTo($a)
 		})
 	})
+
+	if(isNarrow){
+		$('#volume')
+			.appendTo('nav')
+			.css('margin', '35px 25px 0 0')
+		$('nav .row').remove()
+		$('nav .btn-group').removeClass('hidden')
+	}
+	else $('nav .row').removeClass('hidden')
 
 	var volumeSlider = document.getElementById('volume');
 	noUiSlider.create(volumeSlider, {
