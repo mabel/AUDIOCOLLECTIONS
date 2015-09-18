@@ -1,7 +1,7 @@
 $(function(){
 	$.material.init();
 	var isNarrow = $(window).width() <= 320
-    var $ul = $('.list-group')
+    var $ul = $('#iso-images')
 	$.get('/cgi-bin/iso-images.sh', function(dat){
 		var arr = dat.split(/[\r\n]+/)
 		arr.forEach(function(el, i){
@@ -58,5 +58,38 @@ $(function(){
 	})
 	$('.mdi-av-stop').click(function(){
 		$.get('/cgi-bin/stop-all.sh', function(dat){})
+	})
+	$('.mdi-action-search').click(function(){
+		var val = $('#search-request').val().trim()
+		if(!val) return
+		$.get('/cgi-bin/search.sh?' + $('#search-request').val(), function(dat){
+			var arr = dat.split(/[\r\n]/)
+			if(!arr.length) return
+			var $ul = $('#search-result')
+			$ul.empty()
+			arr.forEach(function(el){
+				var sa = el.split('|')
+				if(sa.length < 5) return
+				var $li = $('<li>')
+					.addClass('list-group-item')
+					.appendTo($ul)
+				$('<i class="mdi-image-audiotrack">').appendTo($li)
+				var $a = $('<a>')
+					.attr('href', '#')
+					.appendTo($li)
+					.click(function(){$.get('/cgi-bin/iso-play-single.sh?' + sa[0] + '&' + sa[1] + '&' + sa[2])})
+				if(!isNarrow){
+					$('<strong>').text(sa[4].replace(/\.iso$/, '')).appendTo($a)
+					$('<span>&nbsp;&nbsp;</span>').appendTo($a)
+				}
+				$('<span>').text(sa[3]).appendTo($a)
+			})
+			$('#iso-images').addClass('hidden')
+			$ul.removeClass('hidden')
+		})
+	})
+	$('.mdi-navigation-refresh').click(function(){
+		$('#iso-images').removeClass('hidden')
+		$('#search-result').addClass('hidden')
 	})
 })
